@@ -1,0 +1,25 @@
+1- handles asynchronous operations by delegating tasks to the system and processing their results through callbacks
+
+2- libuv is a C library that helps Node.js communicate with the operating system and handle asynchronous operations using the event loop and thread pool
+Roles:
+        1- handle with os
+        2- Event loop
+        3- Asynchronous I/O
+        4- Thread Pool
+        5- Networking
+
+3- delegates asynchronous operations to the OS or Thread Pool. While the operation is running, the main JavaScript thread continues executing. When it finishes, the callback is placed in a queue, and the Event Loop eventually executes it.
+
+
+4-
+call Stack: track javaScriptb functions that are currently executing
+
+event Queue: holds callbacks that are ready to execute , but call Stack is busy doing something else
+
+event loop : check if call stack is empty or not,if it is empty take from event Queue to call Stack
+
+5- Thread Pool is part of the libuv library, it is a group of worker threads used to handle certain operations that could block the main JavaScript thread
+- To set the Thread Pool size, use the UV_THREADPOOL_SIZE environment variable in Windows CMD, can run set UV_THREADPOOL_SIZE=[value] and then start the Node.js application.
+
+6- executes blocking code on the main JavaScript thread, it has to wait until the operation finishes
+For non-blocking code, Node.js delegates the operation to the OS or Thread Pool and continues executing other code, then handles the result through the Event Loop.
