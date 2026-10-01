@@ -28,8 +28,9 @@ app.post("/user", (req, res) => {
 
     let users = readFile();
 
-    if (users.find((user) => user.email === data.email))
-        return res.json({ message: "Email already exists." });
+    const isUserExist = users.find((user) => user.email === data.email);
+
+    if (isUserExist) return res.json({ message: "Email already exists." });
 
     users.push({ ...data, id });
     ++id;
@@ -41,7 +42,7 @@ app.post("/user", (req, res) => {
 // Q-2
 app.patch("/user/:id", (req, res) => {
     const data = req.body;
-    const id = req.params.id;
+    const { id } = req.params;
 
     const users = readFile();
 
@@ -57,7 +58,7 @@ app.patch("/user/:id", (req, res) => {
     writeFile(users);
 
     res.json({
-        message: `User ${Object.keys(user).join(" ")} updated successfully`,
+        message: `User ${Object.keys(data).join(" and ")} updated successfully`,
     });
 });
 
@@ -69,7 +70,6 @@ app.delete("/user/:id", (req, res) => {
 
     const user = users.findIndex((user) => user.id === +id);
 
-    console.log(user);
     if (user === -1)
         return res.json({
             message: "User ID not found",
